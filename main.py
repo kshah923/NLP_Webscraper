@@ -5,6 +5,8 @@
 import pandas as pd
 from textblob import TextBlob
 
+# Part 1 - Ingesting Results and printing a single file with all results together
+
 df1 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/Webscraper.csv')
 df1 = df1.drop(df1.columns[[0]], axis=1)
 
@@ -20,6 +22,10 @@ df4 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/hw2.csv')
 
 frames = [df1, df2, df3, df4]
 df = pd.concat(frames, ignore_index=True)
+print(df)
+# df.to_csv('200companies.csv')
+
+# Part 2 - using TextBlob to analyze the 200 company's purposes by sentiment
 
 sentiment = pd.DataFrame([], columns=['Sentiment'])
 

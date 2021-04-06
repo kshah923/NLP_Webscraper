@@ -2,24 +2,13 @@
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-df1 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/Webscraper.csv')
-df1 = df1.drop(df1.columns[[0]], axis=1)
+# Part 1 - Ingesting Results and printing a single file with all results together (see main.py)
 
-df2 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/companies_list.csv')
-df2 = df2.drop(df2.columns[[0]], axis=1)
-df2 = df2.rename(columns={'0': 'Name', '1': 'Purpose'})
+df = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/200companies.csv')
 
-df3 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/HTML_Scapper_FForner.csv')
-df3 = df3.drop(df3.columns[[0]], axis=1)
-df3 = df3.rename(columns={'NAME_company': 'Name', 'PURPOSE_company': 'Purpose'})
-
-df4 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/hw2.csv')
-
-frames = [df1, df2, df3, df4]
-df = pd.concat(frames, ignore_index=True)
+# Part 2 - using VaderSentiment to analyze the 200 company's purposes by sentiment
 
 analyzer = SentimentIntensityAnalyzer()
-
 sentiment = pd.DataFrame([], columns=['Sentiment'])
 
 for i in range(200):
