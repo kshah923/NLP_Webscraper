@@ -1,9 +1,6 @@
-# Kevin Shah
-# Assignment 3
-# April 5, 2021
 
 import pandas as pd
-from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 df1 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/Webscraper.csv')
 df1 = df1.drop(df1.columns[[0]], axis=1)
@@ -21,14 +18,16 @@ df4 = pd.read_csv(r'/Users/kshah923/Desktop/Notes/FE 595/hw2.csv')
 frames = [df1, df2, df3, df4]
 df = pd.concat(frames, ignore_index=True)
 
+analyzer = SentimentIntensityAnalyzer()
+
 sentiment = pd.DataFrame([], columns=['Sentiment'])
 
-if __name__ == "__main__":
-    for i in range(200):
-        x = df["Purpose"][i]
-        y = TextBlob(x).sentiment.polarity
+for i in range(200):
+    x = df["Purpose"][i]
+    y = analyzer.polarity_scores(x)
+    z = y['compound']
 
-        sentiment = sentiment.append({'Sentiment': y}, ignore_index=True)
+    sentiment = sentiment.append({'Sentiment': z}, ignore_index=True)
 
 df = df.join(sentiment)
 top10 = df.sort_values(["Sentiment"], ascending=False)
@@ -42,4 +41,4 @@ final = final.append(top10.head(10))
 final = final.append(pd.Series(), ignore_index=True)
 final = final.append(bottom10.head(10), ignore_index=True)
 
-# final.to_csv('TextBlob_Sentiment.csv')
+# final.to_csv('VADER_Sentiment.csv')
